@@ -9,10 +9,59 @@ let fornecedores = [];
 
 /* ************* FUNÇÕES ********* */
 
+function validarCPF(cpf) {
+    cpf = cpf.replace(/[^\d]/g, '');
+    if (cpf.length !== 11) return false;
+
+    if (/^(\d)\1+$/.test(cpf)) return false;
+
+    let soma = 0;
+    for (let i = 0; i < 9; i++) {
+        soma += parseInt(cpf.charAt(i)) * (10 - i);
+    }
+    let resto = 11 - (soma % 11);
+    let digitoVerificador1 = resto === 10 || resto === 11 ? 0 : resto;
+
+    soma = 0;
+    for (let i = 0; i < 10; i++) {
+        soma += parseInt(cpf.charAt(i)) * (11 - i);
+    }
+    resto = 11 - (soma % 11);
+    let digitoVerificador2 = resto === 10 || resto === 11 ? 0 : resto;
+
+    return parseInt(cpf.charAt(9)) === digitoVerificador1 && parseInt(cpf.charAt(10)) === digitoVerificador2;
+}
+
+function formatarCPF(cpf) {
+    cpf = cpf.replace(/[^\d]/g, '');
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+}
+
+function validarEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+}
+
 function cadastrarUsuarios() {
     let nomeDoUsuario = prompt('Insira seu nome:');
-    let cpf = parseFloat(prompt('Insira seu CPF:'));
-    let email = prompt('Insira o seu e-mail:');
+    let cpf;
+    let cpfValido = false;
+    while (!cpfValido) {
+        cpf = prompt('Insira seu CPF:');
+        cpf = formatarCPF(cpf);
+        cpfValido = validarCPF(cpf);
+        if (!cpfValido) {
+            console.log("CPF inválido. Por favor, insira um CPF válido.");
+        }
+    }
+    let email;
+    let emailValido = false;
+    while (!emailValido) {
+        email = prompt('Insira o seu e-mail:');
+        emailValido = validarEmail(email);
+        if (!emailValido) {
+            console.log("E-mail inválido. Por favor, insira um e-mail válido.");
+        }
+    }
     let senha = prompt('Insira sua senha:');
     let cargo = prompt('Insira seu cargo:');
 
@@ -212,7 +261,7 @@ console.log('Sistema de controle de estoque');
 console.log('******+++*******');
 
 /* 01 - Processo de cadastro de 6 usuários */
-for (let i = 0; i < 6; i++) {
+for (let i = 0; i < 3; i++) {
     cadastrarUsuarios();
 }
 
@@ -232,7 +281,7 @@ listarUsuarios();
 logarUsuario();
 
 /* 06 - Cadastrar pelo menos 15 produtos */
-for (let i = 0; i < 15; i++) {
+for (let i = 0; i < 3; i++) {
     adicionarProduto();
 }
 
@@ -243,19 +292,19 @@ validadeIndividual();
 imprimirRelatorioValidades();
 
 /* 09 - Remover pelo menos 5 produtos */
-for (let i = 0; i < 5; i++) {
+//for (let i = 0; i < 5; i++) {
 removerProduto();
-}
+//}
 
 /* 10 - Atualizar a quantidade de pelo menos 5 produtos */
-for (let i = 0; i < 5; i++) {
+//for (let i = 0; i < 5; i++) {
 atualizarQuantidade();
-}
+//}
 
 /* 11 - Cadastrar fornecedor, no minimo 3 */
-for (let i = 0; i < 3; i++) {
+//for (let i = 0; i < 3; i++) {
 cadastrarFornecedor();
-}
+//}
 
 /* 12 - Listar fornecedores */
 listarFornecedores();
