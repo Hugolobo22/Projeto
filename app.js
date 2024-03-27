@@ -283,17 +283,6 @@ function removerFornecedor() { // Função padrão de remover utilizando findInd
     }
 }
 
-function atualizarListaFornecedor() { // Mesmo padrão das funções de atualizar lista
-    let listaFornecedorDiv = document.getElementById('listaFornecedor');
-    listaFornecedorDiv.innerHTML = ''; // Limpar a lista antes de atualizar
-
-    for (let i = 0; i < fornecedores.length; i++) {
-        let fornecedor = fornecedores[i];
-        let fornecedorTexto = `Nome: ${fornecedor.nomeDaEmpresa}, CNPJ: ${fornecedor.cnpj}, E-mail: ${fornecedor.email}, Telefone: ${fornecedor.telefone}, Produtos: ${fornecedor.produtos}<br>`;
-        listaFornecedorDiv.innerHTML += fornecedorTexto;
-    }
-}
-
 // Após todos os códigos acima, percebe-se que, após codificar todo o cadastro do usuário, o cadastro de produto e fornecedor
 // é, basicamente, um código reciclado alterando os parâmetros para suas devidas circunstâncias
 
@@ -306,54 +295,53 @@ console.log('Sistema de controle de estoque');
 console.log('******+++*******');
 
 /* 01 - Processo de cadastro de 6 usuários */
-for (let i = 0; i < 1; i++) {
+for (let i = 0; i < 6; i++) {
     cadastrarUsuarios();
 }
 
 // /* 02 - Listar todos usuários cadastrados, com todas informações */
-// listarUsuarios();
+listarUsuarios();
 
-// /* 03 - Remover 1 dos usuários, qualquer um deles e depois listar novamente eles
-//         para ver se o usuário foi removido. */
-// removerUsuario();
-// listarUsuarios();
+/* 03 - Remover 1 dos usuários, qualquer um deles e depois listar novamente eles para ver se o usuário foi removido. */
+removerUsuario();
+listarUsuarios();
 
-// /* 04 - Alterar algum dado do usuário */
-// alterarDadoUsuario();
-// listarUsuarios();
+/* 04 - Alterar algum dado do usuário */
+alterarDadoUsuario();
+listarUsuarios();
 
-// /* 05 - Fazer login com um dos usuários cadastrados */
-// logarUsuario();
+/* 05 - Fazer login com um dos usuários cadastrados */
+logarUsuario();
 
-// /* 06 - Cadastrar pelo menos 15 produtos */
-for (let i = 0; i < 1; i++) {
+/* 06 - Cadastrar pelo menos 15 produtos */
+for (let i = 0; i < 15; i++) {
     adicionarProduto();
 }
 
-// /* 07 - Consultar validade individualmente de um produto */
-// validadeIndividual();
+/* 07 - Consultar validade individualmente de um produto */
+validadeIndividual();
 
-// /* 08 - Consultar validade de todos os produtos em formato relatório */
-// imprimirRelatorioValidades();
+/* 08 - Consultar validade de todos os produtos em formato relatório */
+imprimirRelatorioValidades();
 
-// /* 09 - Remover pelo menos 5 produtos */
-// //for (let i = 0; i < 5; i++) {
-// removerProduto();
-// //}
+/* 09 - Remover pelo menos 5 produtos */
+for (let i = 0; i < 5; i++) {
+    removerProduto();
+}
 
-// /* 10 - Atualizar a quantidade de pelo menos 5 produtos */
-// //for (let i = 0; i < 5; i++) {
-// atualizarQuantidade();
-// //}
+/* 10 - Atualizar a quantidade de pelo menos 5 produtos */
+for (let i = 0; i < 5; i++) {
+    atualizarQuantidade();
+}
 
-// /* 11 - Cadastrar fornecedor, no minimo 3 */
-//for (let i = 0; i < 1; i++) {
-//cadastrarFornecedor();
-//}
+/* 11 - Cadastrar fornecedor, no minimo 3 */
+for (let i = 0; i < 3; i++) {
+    cadastrarFornecedor();
+}
 
-// /* 12 - Listar fornecedores */
-// listarFornecedores();
+/* 12 - Listar fornecedores */
+listarFornecedores();
 
-// /* 13 - Remover 1 fornecedor e depois imprimir a lista completa */
-// removerFornecedor();
-// listarFornecedores();
+/* 13 - Remover 1 fornecedor e depois imprimir a lista completa */
+removerFornecedor();
+listarFornecedores();

@@ -26,18 +26,3 @@ body {
         border-radius: 20px;
         box-shadow: 0 0 10px #000000aa;
 }
-
-/* Estilos para o botão */
-#meuBotao {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  /* Estilos quando hover */
-  #meuBotao:hover {
-    background-color: #0056b3;
-  }
