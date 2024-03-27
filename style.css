@@ -1,3 +1,43 @@
-body{
-    background-image: url(Background\ Projeto.avif);
+html, body {
+    margin: 0;
+    padding: 0;
 }
+html {
+    background: #6b6666;
+    background-image: url(carro-sendo-cuidado-na-oficina.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-blend-mode: overlay;
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body {
+        background  : white; 
+        border-radius: 50px;
+        display: flex;
+        flex-direction: column;
+        width: 100vw;
+        max-width: 650px;
+        text-align: center;
+        border-radius: 20px;
+        box-shadow: 0 0 10px #000000aa;
+}
+
+/* Estilos para o botão */
+#meuBotao {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Estilos quando hover */
+  #meuBotao:hover {
+    background-color: #0056b3;
+  }
