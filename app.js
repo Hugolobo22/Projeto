@@ -9,7 +9,7 @@ let fornecedores = [];
 
 /* ************* FUNÇÕES ********* */
 
-function validarCPF(cpf) {
+function validarCPF(cpf) { // Utilizamos um validor de cpf utilizando o cálculo convencional para verificar a existência do cpf
     cpf = cpf.replace(/[^\d]/g, '');
     if (cpf.length !== 11) return false;
 
@@ -32,20 +32,20 @@ function validarCPF(cpf) {
     return parseInt(cpf.charAt(9)) === digitoVerificador1 && parseInt(cpf.charAt(10)) === digitoVerificador2;
 }
 
-function formatarCPF(cpf) {
+function formatarCPF(cpf) { // Criamos uma função de formatar cpf, para que CPFs inseridos sem os pontos (.) e hifens (-), sejam alterados devidamente
     cpf = cpf.replace(/[^\d]/g, '');
     return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
 }
 
-function validarEmail(email) {
+function validarEmail(email) { // Criamos uma função de validar email, para conferir se no email cadastrado possui um @ e ., para formar a sintaxe @email.com
     return /\S+@\S+\.\S+/.test(email);
 }
 
-function cadastrarUsuarios() {
+function cadastrarUsuarios() { // No cadastro de usuários, inserimos pelo comando prompt, todas as informações necessárias, armazenando num object
     let nomeDoUsuario = prompt('Insira seu nome:');
     let cpf;
     let cpfValido = false;
-    while (!cpfValido) {
+    while (!cpfValido) { // chamamos a função de formatar cpf, validar email e cpf nessa parte do cadastro
         cpf = prompt('Insira seu CPF:');
         cpf = formatarCPF(cpf);
         cpfValido = validarCPF(cpf);
@@ -69,16 +69,16 @@ function cadastrarUsuarios() {
     usuarios.push(usuario);
 }
 
-function listarUsuarios() {
+function listarUsuarios() { // Nessas partes de listar, usamos para que seja possível exibir os dados dos arrays globais declarados no início, na página principal
         console.log("Lista de Usuários:");
         for (let i = 0; i < usuarios.length; i++) {
             console.log(`Nome: ${usuarios[i].nome}, CPF: ${usuarios[i].cpf}, Email: ${usuarios[i].email}, Cargo: ${usuarios[i].cargo}`);
     }
 }
 
-function atualizarListaUsuarios() {
+function atualizarListaUsuarios() { // A função de atualizar é feita para atualizar a lista da função listar sempre que é recarregada
     let listaUsuariosDiv = document.getElementById('listaUsuarios');
-    listaUsuariosDiv.innerHTML = ''; // Limpar a lista antes de atualizar
+    listaUsuariosDiv.innerHTML = '';
 
     for (let i = 0; i < usuarios.length; i++) {
         let usuario = usuarios[i];
@@ -91,7 +91,7 @@ window.onload = function() {
     atualizarListaUsuarios();
 }
 
-function removerUsuario() {
+function removerUsuario() { // A função remover é utilizada para remover um usuário específico por base do email
     let email, senha;
     let removido = false;
 
@@ -101,7 +101,7 @@ function removerUsuario() {
 
         let index = usuarios.findIndex(usuario => usuario.email === email && usuario.senha === senha);
         if (index !== -1) {
-            usuarios.splice(index, 1);
+            usuarios.splice(index, 1); // optamos pelo splice, devido à capacidade de retirar um index específico mais fácil, já que o pop, convencionalmente, retiraria o último
             console.log("Usuário removido com sucesso.");
             removido = true;
         } else {
@@ -110,7 +110,7 @@ function removerUsuario() {
     }
 }
 
-function alterarDadoUsuario() {
+function alterarDadoUsuario() { // A função de alterar dados, serve para substituir dados já citados, por meio apenas de inserir um novo valor ao termo selecionado
     let email, senha;
     let alterado = false;
 
@@ -120,7 +120,7 @@ function alterarDadoUsuario() {
         let usuario = usuarios.find(usuario => usuario.email === email && usuario.senha === senha);
         if (usuario) {
             let opcao = prompt("Qual dado você deseja alterar? (nome/cpf/email/senha/cargo)");
-            switch (opcao.toLowerCase()) {
+            switch (opcao.toLowerCase()) { // Utilizamos switch case para substituir apenas o termo específico, ao invés de ter que substituir todos os termos anteriores
                 case 'nome':
                     usuario.nome = prompt("Digite o novo nome:");
                     break;
@@ -147,14 +147,14 @@ function alterarDadoUsuario() {
     }
 }
 
-function logarUsuario() {
+function logarUsuario() { // A função logar serve para o usuário cadastrado entrar no sistema
     let email, senha;
     let logado = false;
 
     while (!logado) {
         email = prompt("Digite o email:");
         senha = prompt("Digite a senha:");
-        let usuario = usuarios.find(usuario => usuario.email === email && usuario.senha === senha);
+        let usuario = usuarios.find(usuario => usuario.email === email && usuario.senha === senha); // Utilizamos .find e if else para verificar se os dados estão corretos e no sistema
         if (usuario) {
             console.log("Login realizado com sucesso.");
             logado = true;
@@ -164,7 +164,7 @@ function logarUsuario() {
     }
 }
 
-function adicionarProduto() {
+function adicionarProduto() { // A função adicionar produto funciona similar ao cadastro de usuários, utilizando prompt para todos os dados da mesma
     let nomeDoProduto = prompt('Insira o nome do Carro:');
     let validade = prompt('Insira a data da revisão:');
     let cor = prompt('Insira a cor do carro:');
@@ -175,7 +175,7 @@ function adicionarProduto() {
     estoque.push(produto);
 }
 
-function atualizarListaProduto() {
+function atualizarListaProduto() { // Mesmo conceito da listagem de usuários, para exibir no HTML
     let listaProdutosDiv = document.getElementById('listaProdutos');
     listaProdutosDiv.innerHTML = ''; // Limpar a lista antes de atualizar
 
@@ -186,15 +186,14 @@ function atualizarListaProduto() {
     }
 }
 
-// Chamar a função de atualizar lista de produtos assim que a página carrega
 window.onload = function() {
     atualizarListaUsuarios();
     atualizarListaProduto();
 };
 
-function validadeIndividual() {
+function validadeIndividual() { // Função utilizada para verificar a validade/data de revisão do produto selecionado por base do nome
     let nome = prompt("Digite o nome do produto para consultar a data da sua revisão:");
-    let produto = estoque.find(item => item.nome === nome);
+    let produto = estoque.find(item => item.nome === nome); // Utilizamos novamente o .find para encontrar e verificar o produto
     if (produto) {
         console.log(`A data da revisão do ${nome} é ${produto.garantia}.`);
     } else {
@@ -202,20 +201,20 @@ function validadeIndividual() {
     }
 }
 
-function imprimirRelatorioValidades() {
+function imprimirRelatorioValidades() { // A função serve para imprimir todos os produtos e suas respectivas datas de revisão
     console.log("Lista de Validades:");
     for (let i = 0; i < estoque.length; i++) {
         console.log(`Nome: ${estoque[i].nome}, Data da Revisão: ${estoque[i].garantia}`);
     }
 }
 
-function removerProduto() {
+function removerProduto() { // A função funciona com os mesmos fundamentos da função de remover usuários
     let remover = false;
 
     while (!remover) {
         let nome = prompt("Digite o nome do produto que deseja remover:");
 
-        let produto = estoque.findIndex(item => item.nome === nome);
+        let produto = estoque.findIndex(item => item.nome === nome); // utilizamos findIndex para encontrar o index específico do produto selecionado, e usamos o Splice para removê-lo
         if (produto !== -1) {
             estoque.splice(produto, 1);
             console.log("Produto removido com sucesso.");
@@ -227,7 +226,7 @@ function removerProduto() {
     }
 }
 
-function atualizarQuantidade() {
+function atualizarQuantidade() { // Utiliza o mesmo princípio da atualização de usuários, porém altera apenas a quantidade do produto selecionado
     let remo = false
 
     while (!remo){
@@ -246,7 +245,7 @@ function atualizarQuantidade() {
     }
 }
 
-function cadastrarFornecedor() {
+function cadastrarFornecedor() { // Função padrão de cadastro utilizando prompt
     let nomeDaEmpresa = prompt('Insira o nome da empresa:');
     let cnpj = prompt('Insira o CNPJ da empresa:');
     let email = prompt('Insira o email da empresa:');
@@ -259,14 +258,14 @@ function cadastrarFornecedor() {
     console.log("Fornecedor cadastrado com sucesso.");
 }
 
-function listarFornecedores() {
+function listarFornecedores() { // Função padrão de listagem utilizando forEach
     console.log("Lista de Fornecedores:");
     fornecedores.forEach(fornecedor => {
         console.log(`Nome: ${fornecedor.nomeDaEmpresa}, CNPJ: ${fornecedor.cnpj}, Email: ${fornecedor.email}, Telefone: ${fornecedor.telefone}`);
     });
 }
 
-function removerFornecedor() {
+function removerFornecedor() { // Função padrão de remover utilizando findIndex e Splice
     let remove = false
 
     while (!remove){
@@ -284,7 +283,7 @@ function removerFornecedor() {
     }
 }
 
-function atualizarListaFornecedor() {
+function atualizarListaFornecedor() { // Mesmo padrão das funções de atualizar lista
     let listaFornecedorDiv = document.getElementById('listaFornecedor');
     listaFornecedorDiv.innerHTML = ''; // Limpar a lista antes de atualizar
 
@@ -294,6 +293,10 @@ function atualizarListaFornecedor() {
         listaFornecedorDiv.innerHTML += fornecedorTexto;
     }
 }
+
+// Após todos os códigos acima, percebe-se que, após codificar todo o cadastro do usuário, o cadastro de produto e fornecedor
+// é, basicamente, um código reciclado alterando os parâmetros para suas devidas circunstâncias
+
 
 /*  --------- SEQUÊNCIA DE VALIDAÇÃO E TESTE DO CÓDIGO --------- */
 
