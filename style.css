@@ -16,7 +16,7 @@ html {
 }
 
 body {
-        background  : white; 
+        background-image: url(Backbody.jpg); 
         border-radius: 50px;
         display: flex;
         flex-direction: column;
@@ -25,4 +25,34 @@ body {
         text-align: center;
         border-radius: 20px;
         box-shadow: 0 0 10px #000000aa;
+        padding-bottom: 15px;
+}
+h3{
+    color: black;
+    background-color: gray;
+    margin-right: 200px;
+    margin-left: 200px;
+    border-radius: 30px;
+}
+
+h4{
+    color: black;
+    background-color: gray;
+    margin-right: 200px;
+    margin-left: 200px;
+    border-radius: 30px;
+}
+
+h5{
+    color: black;
+    background-color: white;
+    border-radius: 10px;
+    margin-right: 200px;
+    margin-left: 200px;
+}
+
+div{
+    color: black;
+    background-color: gray;
+    border-radius: 30px;
 }

@@ -4,25 +4,46 @@
 let estoque = []; // Este array deve possuir objetos
 let usuarios = []; // Este array deve possuir objetos
 
+usuarios.push(
+    { nome: "Usuário 1", cpf: "813.975.190-10", email: "usuario1@example.com", senha: "senha123", cargo: "Cargo 1" },
+    { nome: "Usuário 2", cpf: "524.089.820-06", email: "usuario2@example.com", senha: "senha456", cargo: "Cargo 2" },
+    { nome: "Usuário 3", cpf: "638.854.290-55", email: "usuario3@example.com", senha: "senha789", cargo: "Cargo 3" },
+)
+
+estoque.push(
+    { nome: "Carro 1", garantia: "01/01/2025", cor: "Azul", ano: 2022, marca: "Marca 1" },
+    { nome: "Carro 2", garantia: "02/02/2025", cor: "Vermelho", ano: 2023, marca: "Marca 2" },
+    { nome: "Carro 3", garantia: "03/03/2025", cor: "Verde", ano: 2021, marca: "Marca 3" },
+    { nome: "Carro 4", garantia: "04/04/2025", cor: "Preto", ano: 2020, marca: "Marca 4" },
+    { nome: "Carro 5", garantia: "05/05/2025", cor: "Branco", ano: 2019, marca: "Marca 5" },
+    { nome: "Carro 6", garantia: "06/06/2025", cor: "Cinza", ano: 2018, marca: "Marca 6" },
+    { nome: "Carro 7", garantia: "07/07/2025", cor: "Amarelo", ano: 2017, marca: "Marca 7" },
+    { nome: "Carro 8", garantia: "08/08/2025", cor: "Laranja", ano: 2016, marca: "Marca 8" },
+    { nome: "Carro 9", garantia: "09/09/2025", cor: "Roxo", ano: 2015, marca: "Marca 9" },
+    { nome: "Carro 10", garantia: "10/10/2025", cor: "Prata", ano: 2014, marca: "Marca 10" },
+    { nome: "Carro 11", garantia: "11/11/2025", cor: "Dourado", ano: 2013, marca: "Marca 11" },
+    { nome: "Carro 12", garantia: "12/12/2025", cor: "Marrom", ano: 2012, marca: "Marca 12" }
+);
+
 // Varíavel opcional para fornecedores
 let fornecedores = [];
 
 /* ************* FUNÇÕES ********* */
 
 function validarCPF(cpf) { // Utilizamos um validor de cpf utilizando o cálculo convencional para verificar a existência do cpf
-    cpf = cpf.replace(/[^\d]/g, '');
-    if (cpf.length !== 11) return false;
+    cpf = cpf.replace(/[^\d]/g, ''); // Altera todos os dígitos não numéricos para espaços vazios (''), deixando o cpf apenas com números
+    if (cpf.length !== 11) return false; // Verifica se o cpf tem 11 dígitos, se não tiver, o cpf é inválido
 
-    if (/^(\d)\1+$/.test(cpf)) return false;
+    if (/^(\d)\1+$/.test(cpf)) return false; // Verifica se os dígitos do cpf são todos iguais, deixando assim o cpf inválido (ex: 111.111.111-11)
 
-    let soma = 0;
+    let soma = 0; // Verificador do primeiro dígito verificador
     for (let i = 0; i < 9; i++) {
         soma += parseInt(cpf.charAt(i)) * (10 - i);
     }
     let resto = 11 - (soma % 11);
     let digitoVerificador1 = resto === 10 || resto === 11 ? 0 : resto;
 
-    soma = 0;
+    soma = 0; // Verificador do segundo dígito verificador, similar ao primeiro.
     for (let i = 0; i < 10; i++) {
         soma += parseInt(cpf.charAt(i)) * (11 - i);
     }
@@ -33,8 +54,8 @@ function validarCPF(cpf) { // Utilizamos um validor de cpf utilizando o cálculo
 }
 
 function formatarCPF(cpf) { // Criamos uma função de formatar cpf, para que CPFs inseridos sem os pontos (.) e hifens (-), sejam alterados devidamente
-    cpf = cpf.replace(/[^\d]/g, '');
-    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+    cpf = cpf.replace(/[^\d]/g, ''); // Mesmo esquema de retirar dígitos não-numéricos
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"); // Adaptar o cpf para o padrão brasileiro com pontos (.) após 3 números, e hífen (-) separando os 2 últimos digitos
 }
 
 function validarEmail(email) { // Criamos uma função de validar email, para conferir se no email cadastrado possui um @ e ., para formar a sintaxe @email.com
@@ -62,6 +83,7 @@ function cadastrarUsuarios() { // No cadastro de usuários, inserimos pelo coman
             console.log("E-mail inválido. Por favor, insira um e-mail válido.");
         }
     }
+
     let senha = prompt('Insira sua senha:');
     let cargo = prompt('Insira seu cargo:');
 
@@ -283,6 +305,31 @@ function removerFornecedor() { // Função padrão de remover utilizando findInd
     }
 }
 
+function atualizarListaFornecedores() {
+    let listaFornecedoresDiv = document.getElementById('listaFornecedores');
+    listaFornecedoresDiv.innerHTML = ''; // Limpar a lista antes de atualizar
+
+    // Iterar sobre os fornecedores e adicionar cada um à lista
+    fornecedores.forEach(fornecedor => {
+        let fornecedorDiv = document.createElement('div');
+        fornecedorDiv.innerHTML = `
+            <p><strong>Nome da Empresa:</strong> ${fornecedor.nomeDaEmpresa}</p>
+            <p><strong>CNPJ:</strong> ${fornecedor.cnpj}</p>
+            <p><strong>Email:</strong> ${fornecedor.email}</p>
+            <p><strong>Telefone:</strong> ${fornecedor.telefone}</p>
+            <hr>
+        `;
+        listaFornecedoresDiv.appendChild(fornecedorDiv);
+    });
+}
+
+// Chamada da função para exibir os fornecedores ao carregar a página
+window.onload = function() {
+    atualizarListaFornecedores();
+    atualizarListaUsuarios();
+    atualizarListaProduto();
+};
+
 // Após todos os códigos acima, percebe-se que, após codificar todo o cadastro do usuário, o cadastro de produto e fornecedor
 // é, basicamente, um código reciclado alterando os parâmetros para suas devidas circunstâncias
 
@@ -295,7 +342,7 @@ console.log('Sistema de controle de estoque');
 console.log('******+++*******');
 
 /* 01 - Processo de cadastro de 6 usuários */
-for (let i = 0; i < 6; i++) {
+for (let i = 0; i < 3; i++) {
     cadastrarUsuarios();
 }
 
@@ -314,7 +361,7 @@ listarUsuarios();
 logarUsuario();
 
 /* 06 - Cadastrar pelo menos 15 produtos */
-for (let i = 0; i < 15; i++) {
+for (let i = 0; i < 3; i++) {
     adicionarProduto();
 }
 
@@ -345,3 +392,9 @@ listarFornecedores();
 /* 13 - Remover 1 fornecedor e depois imprimir a lista completa */
 removerFornecedor();
 listarFornecedores();
+
+// Explicação do verificador de CPF
+
+// Ele percorre os primeiros 9 dígitos do CPF (índices 0 a 8) e multiplica cada dígito por um peso que varia de 10 a 2. 
+// A soma desses produtos é então utilizada para calcular o primeiro dígito verificador, de acordo com a regra do CPF. 
+// Se o resultado for 10 ou 11, o dígito verificador é 0.
